@@ -1,6 +1,8 @@
 // setup canvas
 
 const canvas = document.querySelector('canvas');
+const score_para = document.querySelector('p');
+let ball_count = 0;
 const ctx = canvas.getContext('2d');
 
 const width = canvas.width = window.innerWidth;
@@ -121,7 +123,7 @@ class EvilCircle extends Shape{
     }
 
     if ((this.y + this.size) >= height) {
-      this.y = width - this.size;
+      this.y = height - this.size;
     }
 
     if ((this.y - this.size) <= 0) {
@@ -138,6 +140,7 @@ class EvilCircle extends Shape{
 
       if (distance < this.size + ball.size) {
         ball.exists = false;
+        ball_count -= 1;
       }
     }
   }
@@ -165,10 +168,11 @@ const evil_circle = new EvilCircle(width/2, height/2);
 function loop() {
   ctx.fillStyle = 'rgba(0, 0, 0, 0.25)';
   ctx.fillRect(0, 0, width, height);
-  
+  ball_count = 0;
   for (const ball of balls) {
     if (ball.exists){
       ball.draw();
+      ball_count += 1;
       ball.update();
       ball.collisionDetect();
       evil_circle.draw();
@@ -176,7 +180,7 @@ function loop() {
       evil_circle.collisionDetect();
     }
   }
-
+  score_para.textContent = `Ball Count: ${ball_count}`;
   requestAnimationFrame(loop);
 }
 
