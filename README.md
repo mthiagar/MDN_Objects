@@ -1,0 +1,1 @@
+Simple ball bouncing game using vanilla javascript to get familiar with objects and object inheritance. 
